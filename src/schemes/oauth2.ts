@@ -260,18 +260,10 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
   }
 
   logout () {
-    let opts = {}
     if (this.options.endpoints.logout) {
-      if (this.name === 'bitpod') {
-        opts = {
-          id_token_hint: this.$auth.$storage.getCookies().id_token,
-          post_logout_redirect_uri: this._logoutRedirectURI
-        }
-      } else {
-        opts = {
-          client_id: this.options.clientId,
-          logout_uri: this._logoutRedirectURI
-        }
+      const opts = {
+        client_id: this.options.clientId,
+        logout_uri: this._logoutRedirectURI
       }
       const url = this.options.endpoints.logout + '?' + encodeQuery(opts)
       window.location.replace(url)
