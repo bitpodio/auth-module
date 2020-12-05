@@ -23,7 +23,7 @@
     ]
   },
   "scripts": {
-    "build": "nuxt-ts build",
+    "build": "tsc",
     "clean": "rimraf dist",
     "dev": "nuxt-ts demo",
     "heroku-postbuild": "nuxt-ts build demo",
