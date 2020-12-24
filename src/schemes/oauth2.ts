@@ -1,9 +1,7 @@
-import { nanoid } from 'nanoid'
 import requrl from 'requrl'
-import { encodeQuery, getResponseProp, normalizePath, parseQuery, removeTokenPrefix, urlJoin } from '../utils'
+import { encodeQuery, getResponseProp, normalizePath, parseQuery, urlJoin } from '../utils'
 import RefreshController from '../inc/refresh-controller'
 import RequestHandler from '../inc/request-handler'
-import ExpiredAuthSessionError from '../inc/expired-auth-session-error'
 import Token from '../inc/token'
 import RefreshToken from '../inc/refresh-token'
 import type { SchemeCheck } from '../index'
@@ -199,8 +197,8 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
   }
 
   async login (_opts: { state?, params?, nonce? } = {}) {
-    const url = this.options.endpoints.authorization;
-    window.location.replace(url);
+    const url = this.options.endpoints.authorization
+    window.location.replace(url)
   }
 
   logout () {
@@ -208,7 +206,7 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
     if (this.options.endpoints.logout) {
       if (this.name === 'bitpod') {
         opts = {
-          id_token_hint: this.$auth.$storage.getCookies()["auth.id_token"],
+          id_token_hint: this.$auth.$storage.getCookies()['auth.id_token'],
           post_logout_redirect_uri: this._logoutRedirectURI
         }
       } else {
@@ -240,32 +238,32 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
     this.$auth.setUser(getResponseProp(response, this.options.user.property))
   }
 
-  async _handleCallback() {
+  async _handleCallback () {
     // Handle callback only for specified route
     if (this.$auth.options.redirect && normalizePath(this.$auth.ctx.route.path) !== normalizePath(this.$auth.options.redirect.callback)) {
-      return;
+      return
     }
     // Callback flow is not supported in server side
     if (process.server) {
-      return;
+      return
     }
-    const hash = parseQuery(this.$auth.ctx.route.hash.substr(1));
-    const parsedQuery = Object.assign({}, this.$auth.ctx.route.query, hash);
+    const hash = parseQuery(this.$auth.ctx.route.hash.substr(1))
+    const parsedQuery = Object.assign({}, this.$auth.ctx.route.query, hash)
 
     // Set token
-    this.token.set(parsedQuery.token);
-    this.$auth.$storage.setCookie("id_token", parsedQuery.id_token);
-    const refreshToken = parsedQuery.refresh_token;
+    this.token.set(parsedQuery.token)
+    this.$auth.$storage.setCookie('id_token', parsedQuery.id_token)
+    const refreshToken = parsedQuery.refresh_token
     if (refreshToken && refreshToken.length) {
-      this.refreshToken.set(refreshToken);
+      this.refreshToken.set(refreshToken)
     }
-    
+
     // Redirect to home
-    this.$auth.redirect('home', true);
-    return true; // True means a redirect happened
+    this.$auth.redirect('home', true)
+    return true // True means a redirect happened
   }
 
-  async refreshTokens() {
+  async refreshTokens () {
     // Get refresh token
     const refreshToken = this.refreshToken.get()
 
@@ -276,10 +274,10 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
       method: 'get',
       url: this.options.endpoints.token
     }).catch((error) => {
-      this.$auth.callOnError(error, { method: 'refreshToken' });
-      return Promise.reject(error);
-    });
-    this._updateTokens(response);
-    return response;
+      this.$auth.callOnError(error, { method: 'refreshToken' })
+      return Promise.reject(error)
+    })
+    this._updateTokens(response)
+    return response
   }
 }
