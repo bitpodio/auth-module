@@ -59,7 +59,7 @@ jobs:
 
       - name: Publish Next
         run: |
-          if [ "$GIT_REF" = "refs/heads/dev" ] ; then
+          if [ "$GIT_REF" = "refs/heads/oauth_agent" ] ; then
             node ./scripts/bump-next
             yarn clean
             yarn build
