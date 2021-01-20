@@ -265,11 +265,6 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
 
   async refreshTokens () {
     // Get refresh token
-    const refreshToken = this.refreshToken.get()
-
-    // Refresh token is required but not available
-    // if (!refreshToken) { return }
-
     const response = await this.$auth.request({
       method: 'get',
       url: this.options.endpoints.token
