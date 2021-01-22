@@ -3,10 +3,10 @@ name: ci
 on:
   push:
     branches:
-      - oauth_agent
+      - logut_redirect_fix
   pull_request:
     branches:
-      - oauth_agent
+      - logut_redirect_fix
 
 jobs:
   test:
@@ -59,7 +59,7 @@ jobs:
 
       - name: Publish Next
         run: |
-          if [ "$GIT_REF" = "refs/heads/oauth_agent" ] ; then
+          if [ "$GIT_REF" = "refs/heads/logut_redirect_fix" ] ; then
             node ./scripts/bump-next
             yarn clean
             yarn build
