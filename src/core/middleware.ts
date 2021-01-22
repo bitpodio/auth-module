@@ -5,7 +5,7 @@ export default async function authMiddleware (ctx) {
   if (routeOption(ctx.route, 'auth', false)) {
     return
   }
-
+  console.log("In auth middleware", ctx.$auth.options.redirect)
   // Disable middleware if no route was matched to allow 404/error page
   const matches = []
   const Components = getMatchedComponents(ctx.route, matches)
@@ -20,6 +20,7 @@ export default async function authMiddleware (ctx) {
   if (ctx.$auth.$state.loggedIn) {
     // -- Authorized --
     if (!login || insidePage(login) || pageIsInGuestMode) {
+      console.log("redirecting to home", ctx.$auth.$state.loggedIn)
       ctx.$auth.redirect('home')
     }
 
@@ -44,6 +45,7 @@ export default async function authMiddleware (ctx) {
     // (Those passing `callback` at runtime need to mark their callback component
     // with `auth: false` to avoid an unnecessary redirect from callback to login)
   } else if (!pageIsInGuestMode && (!callback || !insidePage(callback))) {
+    console.log("redirecting to login page", ctx.$auth.$state.loggedIn)
     ctx.$auth.redirect('login')
   }
 }
