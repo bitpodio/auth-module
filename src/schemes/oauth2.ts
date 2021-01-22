@@ -207,7 +207,7 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
       if (this.name === 'bitpod') {
         opts = {
           id_token_hint: this.$auth.$storage.getCookies()['auth.id_token'],
-          post_logout_redirect_uri: this._logoutRedirectURI
+          post_logout_redirect_uri: this.$auth.$storage.getCookies()['domain_url']
         }
       } else {
         opts = {
