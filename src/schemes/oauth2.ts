@@ -218,7 +218,9 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
       const url = this.options.endpoints.logout + '?' + encodeQuery(opts)
       window.location.replace(url)
     }
-    document.cookie = 'apollo-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;'
+    if(document) {
+        document.cookie = 'apollo-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;'
+      }
     return this.$auth.reset()
   }
 
