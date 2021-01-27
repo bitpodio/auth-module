@@ -84,7 +84,7 @@ export default class Auth {
       // eslint-disable-next-line no-console
       console.warn('[AUTH] $auth.getState is deprecated. Please use $auth.$storage.getState() or top level props like $auth.loggedIn')
     }
-
+    console.log('Key - ', key, this.$storage.getState(key))
     return this.$storage.getState(key)
   }
 
@@ -150,7 +150,7 @@ export default class Auth {
     if (!this.strategy.fetchUser) {
       return Promise.resolve()
     }
-
+    console.log('fetching user in auth.ts line 153')
     return Promise.resolve(this.strategy.fetchUser(...args)).catch((error) => {
       this.callOnError(error, { method: 'fetchUser' })
       return Promise.reject(error)
@@ -223,6 +223,7 @@ export default class Auth {
   }
 
   fetchUserOnce (...args) {
+    console.log('fetch user once auth.ts 226')
     if (!this.$state.user) {
       return this.fetchUser(...args)
     }
@@ -238,7 +239,7 @@ export default class Auth {
     if (check.valid) {
       check = this.check()
     }
-
+    console.log('setting state loggedIn', check.valid)
     // Update `loggedIn` state
     this.$storage.setState('loggedIn', check.valid)
   }
