@@ -267,7 +267,7 @@ export default class Auth {
     return this.ctx.app.$axios
       .request(_endpoint)
       .catch((error) => {
-        console.error('log endpoint', _endpoint, error)
+        console.error('log endpoint', _endpoint, error, error.response.data)
         // Call all error handlers
         this.callOnError(error, { method: 'request' })
 
