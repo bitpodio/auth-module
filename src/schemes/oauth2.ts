@@ -227,7 +227,7 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
     if (!this.check().valid) {
       return
     }
-
+    console.log('Fetching user')
     if (!this.options.endpoints.userInfo) {
       this.$auth.setUser({})
       return
@@ -236,7 +236,7 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
     const response = await this.$auth.requestWith(this.name, {
       url: this.options.endpoints.userInfo
     })
-
+    console.log('User fetched.. Setting it')
     this.$auth.setUser(getResponseProp(response, this.options.user.property))
   }
 
