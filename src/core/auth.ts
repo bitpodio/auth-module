@@ -263,7 +263,7 @@ export default class Auth {
       console.error('[AUTH] add the @nuxtjs/axios module to nuxt.config file')
       return
     }
-
+    console.log('before request', _endpoint)
     return this.ctx.app.$axios
       .request(_endpoint)
       .catch((error) => {
