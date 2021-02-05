@@ -3,10 +3,10 @@ name: ci
 on:
   push:
     branches:
-      - refresh_token_fix_5245
+      - oauth-agent
   pull_request:
     branches:
-      - refresh_token_fix_5245
+      - oauth-agent
 
 jobs:
   test:
@@ -59,7 +59,7 @@ jobs:
 
       - name: Publish Next
         run: |
-          if [ "$GIT_REF" = "refs/heads/refresh_token_fix_5245" ] ; then
+          if [ "$GIT_REF" = "refs/heads/oauth-agent" ] ; then
             node ./scripts/bump-next
             yarn clean
             yarn build
