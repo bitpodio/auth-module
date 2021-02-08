@@ -3,12 +3,10 @@ name: ci
 on:
   push:
     branches:
-      - master
-      - dev
+      - logout_redirection_fixes
   pull_request:
     branches:
-      - master
-      - dev
+      - logout_redirection_fixes
 
 jobs:
   test:
@@ -62,7 +60,7 @@ jobs:
 
       - name: Publish Next
         run: |
-          if [ "$GIT_REF" = "refs/heads/dev" ] ; then
+          if [ "$GIT_REF" = "refs/heads/logout_redirection_fixes" ] ; then
             node ./scripts/bump-next
             yarn clean
             yarn build
