@@ -3,10 +3,10 @@ name: ci
 on:
   push:
     branches:
-      - oauth_agent
+      - session_exp_issue
   pull_request:
     branches:
-      - oauth_agent
+      - session_exp_issue
 
 jobs:
   test:
@@ -59,7 +59,7 @@ jobs:
 
       - name: Publish Next
         run: |
-          if [ "$GIT_REF" = "refs/heads/oauth_agent" ] ; then
+          if [ "$GIT_REF" = "refs/heads/session_exp_issue" ] ; then
             node ./scripts/bump-next
             yarn clean
             yarn build
