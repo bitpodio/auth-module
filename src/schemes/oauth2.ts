@@ -269,7 +269,7 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
     const loginId = this.$auth.$storage.getCookies()['auth.loginId']
     const response = await this.$auth.request({
       method: 'get',
-      url: `${this.options.endpoints.token}&loginId=${loginId}`
+      url: this.options.endpoints.token+'&loginId='+loginId
     }).catch((error) => {
       this.$auth.callOnError(error, { method: 'refreshToken' })
       return Promise.reject(error)
