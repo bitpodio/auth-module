@@ -49,7 +49,7 @@ export default class RequestHandler {
   initializeRequestInterceptor (refreshEndpoint?: string) {
     this.interceptor = this.axios.interceptors.request.use(async (config) => {
       // Don't intercept refresh token requests
-      if (!this._needToken(config) || config.url === refreshEndpoint) {
+      if (!this._needToken(config) || config.url.includes(refreshEndpoint)) {
         return config
       }
 
