@@ -7,7 +7,7 @@ const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
 
 const gitRef = execSync('git --no-pager log --format="%h" -n 1').toString().trim()
 
-pkg.name = '@bitpod/auth-nuxt'
+pkg.name = '@bitpod/auth-nuxt-custom'
 pkg.version = '5.0.0-' + Math.round((new Date() / 1000)) + '.' + gitRef
 
 fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2))

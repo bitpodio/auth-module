@@ -253,6 +253,7 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
     // Set token
     this.token.set(parsedQuery.token)
     this.$auth.$storage.setCookie('id_token', parsedQuery.id_token)
+    this.$auth.$storage.setCookie('loginId', parsedQuery.loginId)
     const refreshToken = parsedQuery.refresh_token
     if (refreshToken && refreshToken.length) {
       this.refreshToken.set(refreshToken)
@@ -265,9 +266,10 @@ export default class Oauth2Scheme extends BaseScheme<typeof DEFAULTS> {
 
   async refreshTokens () {
     // Get refresh token
+    const loginId = this.$auth.$storage.getCookies()['auth.loginId']
     const response = await this.$auth.request({
       method: 'get',
-      url: this.options.endpoints.token
+      url: this.options.endpoints.token + '&loginId=' + loginId
     }).catch((error) => {
       this.$auth.callOnError(error, { method: 'refreshToken' })
       return Promise.reject(error)
